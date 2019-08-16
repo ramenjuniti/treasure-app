@@ -1,0 +1,2 @@
+-- +goose Up
+ALTER TABLE ref CHANGE COLUMN ref link TEXT NOT NULL;
