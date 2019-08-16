@@ -7,25 +7,45 @@ import (
 	"github.com/voyagegroup/treasure-app/model"
 )
 
-func CreateArticleTag(db *sqlx.Tx, articleId int64, tagId int64) (sql.Result, error) {
-	stmt, err := db.Prepare(`
-INSERT INTO article_tag (article_id, tag_id) VALUES (?, ?)
-`)
+func AllTag(db *sqlx.DB) ([]model.Tag, error) {
+	t := make([]model.Tag, 0)
+	if err := db.Select(&t, `SELECT id, name FROM tag`); err != nil {
+		return nil, err
+	}
+	return t, nil
+}
+
+func FindTag(db *sqlx.DB, id int64) (*model.Tag, error) {
+	t := model.Tag{}
+	if err := db.Get(&t, `SELECT id, name FROM tag WHERE id = ?`, id); err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func CreateTag(db *sqlx.Tx, tag *model.Tag) (sql.Result, error) {
+	stmt, err := db.Prepare(`INSERT INTO tag (name) VALUES (?)`)
 	if err != nil {
 		return nil, err
 	}
 	defer stmt.Close()
-	return stmt.Exec(articleId, tagId)
+	return stmt.Exec(tag.Name)
 }
 
-func FindArticleTagByArticleID(db *sqlx.DB, articleId int64) ([]model.Tag, error) {
-	t := make([]model.Tag, 0)
-	if err := db.Select(&t, `
-SELECT tag.id as id, tag.name as name FROM article_tag 
-INNER JOIN tag ON tag.id = article_tag.tag_id
-WHERE article_tag.article_id = ?
-`, articleId); err != nil {
+func UpdateTag(db *sqlx.Tx, id int64, tag *model.Tag) (sql.Result, error) {
+	stmt, err := db.Prepare(`UPDATE note SET name = ? WHERE id = ?`)
+	if err != nil {
 		return nil, err
 	}
-	return t, nil
+	defer stmt.Close()
+	return stmt.Exec(tag.Name, id)
+}
+
+func DestroyTag(db *sqlx.Tx, id int64) (sql.Result, error) {
+	stmt, err := db.Prepare(`DELETE FROM tag WHERE id = ?`)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	return stmt.Exec(id)
 }

@@ -85,15 +85,30 @@ func (s *Server) Route() *mux.Router {
 	r.Methods(http.MethodGet).Path("/public").Handler(commonChain.Then(sample.NewPublicHandler()))
 	r.Methods(http.MethodGet).Path("/private").Handler(authChain.Then(sample.NewPrivateHandler(s.db)))
 
-	articleController := controller.NewArticle(s.db)
-	r.Methods(http.MethodPost).Path("/articles").Handler(authChain.Then(AppHandler{articleController.Create}))
-	r.Methods(http.MethodPut).Path("/articles/{id}").Handler(authChain.Then(AppHandler{articleController.Update}))
-	r.Methods(http.MethodDelete).Path("/articles/{id}").Handler(authChain.Then(AppHandler{articleController.Destroy}))
-	r.Methods(http.MethodGet).Path("/articles").Handler(commonChain.Then(AppHandler{articleController.Index}))
-	r.Methods(http.MethodGet).Path("/articles/{id}").Handler(commonChain.Then(AppHandler{articleController.Show}))
+	noteController := controller.NewNote(s.db)
+	r.Methods(http.MethodPost).Path("/notes").Handler(authChain.Then(AppHandler{noteController.Create}))
+	r.Methods(http.MethodPut).Path("/notes/{id}").Handler(authChain.Then(AppHandler{noteController.Update}))
+	r.Methods(http.MethodDelete).Path("/notes/{id}").Handler(authChain.Then(AppHandler{noteController.Destroy}))
+	r.Methods(http.MethodGet).Path("/notes").Handler(commonChain.Then(AppHandler{noteController.Index}))
+	r.Methods(http.MethodGet).Path("/notes/{id}").Handler(commonChain.Then(AppHandler{noteController.Show}))
 
-	articleCommentController := controller.NewArticleComment(s.db)
-	r.Methods(http.MethodPost).Path("/articles/{article_id}/comments").Handler(authChain.Then(AppHandler{articleCommentController.Create}))
+	refController := controller.NewRef(s.db)
+	r.Methods(http.MethodPost).Path("/notes/{note_id}/refs").Handler(authChain.Then(AppHandler{refController.Create}))
+	r.Methods(http.MethodPut).Path("/refs/{id}").Handler(authChain.Then(AppHandler{refController.Update}))
+	r.Methods(http.MethodDelete).Path("/refs/{id}").Handler(authChain.Then(AppHandler{refController.Destroy}))
+	r.Methods(http.MethodGet).Path("/refs").Handler(commonChain.Then(AppHandler{refController.Index}))
+	r.Methods(http.MethodGet).Path("/refs/{id}").Handler(commonChain.Then(AppHandler{refController.Show}))
+
+	tagController := controller.NewTag(s.db)
+	r.Methods(http.MethodPost).Path("/tags").Handler(authChain.Then(AppHandler{tagController.Create}))
+	r.Methods(http.MethodPut).Path("/tags/{id}").Handler(authChain.Then(AppHandler{tagController.Update}))
+	r.Methods(http.MethodDelete).Path("/tags/{id}").Handler(authChain.Then(AppHandler{tagController.Destroy}))
+	r.Methods(http.MethodGet).Path("/tags").Handler(commonChain.Then(AppHandler{tagController.Index}))
+	r.Methods(http.MethodGet).Path("/tags/{id}").Handler(commonChain.Then(AppHandler{tagController.Show}))
+
+	noteTagController := controller.NewNoteTag(s.db)
+	r.Methods(http.MethodPost).Path("/notes/{note_id}/tags/{tab_id}").Handler(authChain.Then(AppHandler{noteTagController.Create}))
+	r.Methods(http.MethodDelete).Path("/notes/{note_id}/tags/{tab_id}").Handler(authChain.Then(AppHandler{noteTagController.Destroy}))
 
 	r.PathPrefix("").Handler(commonChain.Then(http.StripPrefix("/img", http.FileServer(http.Dir("./img")))))
 	return r
