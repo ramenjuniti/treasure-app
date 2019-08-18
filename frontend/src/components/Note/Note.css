@@ -1,0 +1,7 @@
+.Note {
+  margin-bottom: 20px;
+}
+
+.Note:nth-last-of-type(0) {
+  margin: 0;
+}

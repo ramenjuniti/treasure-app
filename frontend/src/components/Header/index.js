@@ -1,11 +1,10 @@
 import { connect } from "react-redux";
 import firebase from "../../firebase";
 
-import App from "./App";
+import Header from "./Header";
 import { loginAction, logoutAction } from "../../actions/Auth";
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     user: state.auth.user
   };
@@ -34,4 +33,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Header);

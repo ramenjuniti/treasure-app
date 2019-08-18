@@ -1,0 +1,22 @@
+.Header {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header-left {
+  color: white;
+}
+
+.Header-button-area {
+  display: flex;
+  align-items: center;
+}
+
+.Header-user-area {
+  margin-right: 20px;
+}
+
+.Header-user-area > * {
+  margin: 0 10px 0 0;
+}

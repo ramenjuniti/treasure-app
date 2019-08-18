@@ -39,7 +39,7 @@ req-notes-delete:
 	curl -v -XDELETE -H "Authorization: Bearer $(shell cat ./$(TOKEN_FILE))" $(HOST):$(PORT)/notes/$(NOTE_ID)
 
 
-req-refes-get:
+req-refs-get:
 	curl -v $(HOST):$(PORT)/refs/$(REF_ID)
 
 req-refs-post:
@@ -51,6 +51,9 @@ req-refs-update:
 req-refs-delete:
 	curl -v -XDELETE -H "Authorization: Bearer $(shell cat ./$(TOKEN_FILE))" $(HOST):$(PORT)/refs/$(REF_ID)
 
+
+req-tags:
+	curl -v $(HOST):$(PORT)/tags
 
 req-tags-get:
 	curl -v $(HOST):$(PORT)/tags/$(TAG_ID)

@@ -44,14 +44,15 @@ func (note *Note) Show(w http.ResponseWriter, r *http.Request) (int, interface{}
 		return http.StatusBadRequest, nil, err
 	}
 
-	idNote, err := repository.FindNote(note.db, nid)
+	noteService := service.NewNote(note.db)
+	noteDetail, err := noteService.FindNoteDetail(nid)
 	if err != nil && err == sql.ErrNoRows {
 		return http.StatusNotFound, nil, err
 	} else if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
 
-	return http.StatusCreated, idNote, nil
+	return http.StatusCreated, noteDetail, nil
 }
 
 func (note *Note) Create(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
