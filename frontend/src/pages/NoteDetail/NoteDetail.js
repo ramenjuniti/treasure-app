@@ -86,6 +86,8 @@ class NoteDetail extends React.Component {
     const { user } = this.props;
     const { id, refTitle, refDescription, refLink } = this.state;
 
+    console.log(id, refTitle, refDescription, refLink);
+
     if (!user) {
       message.error("please login");
       return;
@@ -224,7 +226,6 @@ class NoteDetail extends React.Component {
       title,
       description,
       refs,
-      tags,
       refTitle,
       refDescription,
       refLink,
@@ -290,10 +291,6 @@ class NoteDetail extends React.Component {
         >
           Add Ref
         </Button>
-        <div className="NoteDetail-tags">
-          {tags.length !== 0 &&
-            tags.map((tag, key) => <Tag key={key}>{tag.name}</Tag>)}
-        </div>
         <Modal
           title="Update Note"
           visible={showUpdateNoteModal}

@@ -82,7 +82,6 @@ class Notes extends React.Component {
 
   render = () => {
     const { notes, showModal, newTitle, newDescription } = this.state;
-    console.log(this.state);
     return (
       <div className="Notes">
         <Button
