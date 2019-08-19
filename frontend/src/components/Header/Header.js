@@ -4,11 +4,13 @@ import { Layout, Button, Avatar } from "antd";
 import "./Header.css";
 
 const Header = props => {
-  const { login, logout, user } = props;
+  const { login, logout, user, push } = props;
 
   return (
     <Layout.Header className="Header">
-      <h1 className="Header-left">reftumu</h1>
+      <h1 className="Header-left" onClick={() => push("/")}>
+        reftumu
+      </h1>
       <div className="Header-right">
         {user ? (
           <div className="Header-button-area">

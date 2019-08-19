@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import firebase from "../../firebase";
+import { push } from "connected-react-router";
 
 import Header from "./Header";
 import { loginAction, logoutAction } from "../../actions/Auth";
@@ -26,6 +27,9 @@ const mapDispatchToProps = dispatch => {
     logout() {
       firebase.logout();
       dispatch(logoutAction());
+    },
+    push(path) {
+      dispatch(push(path));
     }
   };
 };

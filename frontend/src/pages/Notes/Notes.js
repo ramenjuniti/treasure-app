@@ -18,6 +18,10 @@ class Notes extends React.Component {
     this.getAllNotes();
   };
 
+  componentDidUpdate = () => {
+    this.getAllNotes();
+  };
+
   getAllNotes = () => {
     getNotes()
       .then(json => {

@@ -145,8 +145,13 @@ class NoteDetail extends React.Component {
   };
 
   deleteIdNote = () => {
-    const { user } = this.props;
+    const { user, push } = this.props;
     const { id } = this.state;
+
+    if (!user) {
+      message.error("please login");
+      return;
+    }
 
     user
       .getIdToken()
@@ -156,6 +161,7 @@ class NoteDetail extends React.Component {
       .then(() => {
         this.getIdNote();
         message.success("Success!!");
+        push("/");
       })
       .catch(err => {
         message.error(err.message);
@@ -243,7 +249,7 @@ class NoteDetail extends React.Component {
                   : message.error("please login");
               }}
             />
-            <Icon type="delete" />
+            <Icon type="delete" onClick={this.deleteIdNote} />
           </div>
         }
       >
