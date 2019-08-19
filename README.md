@@ -1,21 +1,5 @@
-# treasure-app
+# reftumu
 
-> Remember, Makefile is always your friend
+読んだドキュメントやqiitaの記事を記録できるアプリ
 
-### local環境
-```
-❯ docker --version
-Docker version 18.09.2, build 6247962
-
-❯ go version
-go version go1.12.7 darwin/amd64
-
-❯ node --version
-v10.15.3
-
-❯ npm -v
-6.4.1
-```
-
-### Links
- - https://12factor.net
+Noteに読んだドキュメントをまとめて登録できます

@@ -255,6 +255,18 @@ class NoteDetail extends React.Component {
         }
       >
         <p>{description}</p>
+        <Button
+          className="NoteDetail-Add-Ref"
+          type="primary"
+          icon="plus"
+          onClick={() => {
+            user
+              ? this.setState({ showNewRefModal: true })
+              : message.error("please login");
+          }}
+        >
+          Add Ref
+        </Button>
         {refs.length !== 0 ? (
           refs.map((ref, key) => (
             <Ref
@@ -279,18 +291,6 @@ class NoteDetail extends React.Component {
         ) : (
           <Empty />
         )}
-        <Button
-          className="NoteDetail-Add-Ref"
-          type="primary"
-          icon="plus"
-          onClick={() => {
-            user
-              ? this.setState({ showNewRefModal: true })
-              : message.error("please login");
-          }}
-        >
-          Add Ref
-        </Button>
         <Modal
           title="Update Note"
           visible={showUpdateNoteModal}
